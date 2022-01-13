@@ -1,0 +1,16 @@
+def fizzbuzz(limit):
+  # Write your code here
+  lst = list(range(1,limit+1))
+  for i in range(len(lst)):
+    if lst[i]%3 == 0 and lst[i] % 5 == 0:
+      lst[i] = 'FizzBuzz'
+    elif lst[i]%3 == 0:
+      lst[i] = 'Fizz'
+    elif lst[i] % 5 == 0:
+      lst[i] = 'Buzz'
+  return lst
+
+  
+print(fizzbuzz(16))
+
+

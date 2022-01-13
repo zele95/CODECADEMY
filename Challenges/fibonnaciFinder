@@ -1,0 +1,28 @@
+def fib_finder(n):
+  lst = [0,1]
+  if n == 1 or n == 2:
+    return lst[n-1]
+  else:
+    for i in range(2,n):
+      lst.append(lst[i-2] + lst[i-1]) 
+    return lst[n-1]
+
+print(fib_finder(6))
+
+
+# recursively with dynamic programming
+memo = {}
+
+def fibonacci(num):
+  answer = None
+  if num in memo:
+    answer = memo[num]
+  elif num == 0 or num == 1:
+    answer = num
+  else:
+    answer = fibonacci(num-1)+ fibonacci(num-2) 
+    memo[num] = answer
+  return answer
+
+print(fibonacci(20))
+print(fibonacci(200))
