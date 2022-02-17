@@ -1,7 +1,7 @@
 # import libraries
 
 import csv
-from statistics import mea
+from statistics import mean
 
 
 
@@ -165,6 +165,6 @@ patients.analyze_smokers()
 # analyze smokers BMI
 patients.analyze_bmi()
 
-# create a dictionary with th epatients data
+# create a dictionary with the patients data
 patients_dict = patients.create_dictionary()
 print(patients_dict['age'])
