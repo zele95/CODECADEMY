@@ -25,7 +25,7 @@ def plot_rankings(coaster_name,df,park_name):
     plt.ylabel('Rank')
     plt.title(coaster_name + ' Rankings')
 
-    plt.show()
+    plt.show(block = False)
 
 # test function
 plot_rankings('El Toro',coasters_wood,'Six Flags Great Adventure')
@@ -49,7 +49,7 @@ def plot_2rankings(coaster1,coaster2,df1,df2,park_name1,park_name2):
     plt.xlabel('Year')
     plt.ylabel('Rank')
     plt.legend()
-    plt.show()
+    plt.show(block = False)
 
 # test function
 plot_2rankings('El Toro','Boulder Dash',coasters_wood,coasters_wood,'Six Flags Great Adventure','Lake Compounce')
@@ -71,7 +71,7 @@ def plot_nrankings(n,df):
     plt.ylabel('Rank')
     plt.title('Top ' + str(len(set(top_n_rankings['Name']))) + ' Rankings')
     plt.legend(loc=4)
-    plt.show()
+    plt.show(block = False)
 
 # test function
 plot_nrankings(5,coasters_wood)
@@ -80,7 +80,7 @@ plt.clf()
 # %%
 # load roller coaster data here:
 coasters_df = pd.read_csv('roller_coasters.csv')
-# print(coasters_df.head())
+print(coasters_df.head())
 
 
 # write function to plot histogram of column values:
@@ -99,7 +99,7 @@ def plot_histogram(df, column):
     plt.xlabel(column.capitalize())
     plt.ylabel('Count')
     plt.title('Histogram of Roller Coaster {}'.format(column.capitalize()))
-    plt.show()
+    plt.show(block = False)
 
 # test function
 plot_histogram(coasters_df, 'speed')
@@ -129,7 +129,7 @@ def plot_bar_inversions(df,park_name):
     plt.title('Number of Inversions Per Coaster at {}'.format(park_name))
     plt.xlabel('Roller Coaster')
     plt.ylabel('Inversions')
-    plt.show()
+    plt.show(block = False)
 
 
 # test function
@@ -151,7 +151,7 @@ def plot_pie_operating(df):
     plt.pie([operating, noperating],autopct = '%0.1f%%',labels = ['Operational','Closed'])
     plt.axis('equal')
     plt.title('Operational coasters')
-    plt.show()
+    plt.show(block = False)
     
 # test function
 plot_pie_operating(coasters_df)
@@ -171,7 +171,7 @@ def plot_scatter(df, column1, column2):
     plt.xlabel(column1.capitalize())
     plt.ylabel(column2.capitalize())
     plt.title('Scatter Plot of {} vs. {}'.format(column1.capitalize(),column2.capitalize()))
-    plt.show()
+    plt.show(block = False)
 
 # test function
 plot_scatter(coasters_df, 'length', 'height')
@@ -182,14 +182,64 @@ plot_scatter(coasters_df, 'speed', 'height')
 plt.clf()
 
 # %%
-
-
 # What roller coaster seating type is most popular?
 # And do different seating types result in 
 # higher/faster/longer roller coasters?
+import seaborn as sns
 
+# print(coasters_df.head())
+
+# extract seating type data
+seatings = coasters_df.seating_type.value_counts()
+# print(seatings)
+mask = coasters_df.seating_type.isin(seatings[seatings<50].index)
+coasters_df.seating_type[mask] = 'Other'
+seatings = coasters_df.seating_type.value_counts()
+
+# create a pie chart
+labels = seatings.index
+values = seatings.values
+plt.pie(values,labels = labels, autopct = '%d%%')
+plt.title('Rollercoasters seatting types' )
+plt.show(block = False)
+
+# create a bar chart for seating types 
+def plot_seatingtype(df,column):
+    plt.figure(figsize = (12,7))
+    # sns.set_style()
+    sns.boxplot(data = df.dropna(), x = 'seating_type', y = column)
+    plt.xlabel('Seating type')
+    plt.ylabel(column.capitalize())
+    plt.show()
+
+plot_seatingtype(coasters_df,'length')
+plot_seatingtype(coasters_df,'speed')
+
+
+# %%
 # Do roller coaster manufacturers have any specialties
 # (do they focus on speed, height, seating type, or inversions)?
 
+manufacturers = coasters_df.dropna().groupby('manufacturer')[['speed','length','height','num_inversions']].mean().reset_index()
+print(manufacturers)
+# print(manufacturers[manufacturers.manufacturer == 'ACE Coaster Classic'])
+print(manufacturers[['speed','length','height','num_inversions']][manufacturers.manufacturer == 'ACE Coaster Classic'])
+
+
+# create a bar chart for seating types 
+def plot_seatingtype(df,manufact):
+    plt.figure(figsize = (12,7))
+    # sns.set_style()
+    plt.bar(range(4),df[['speed','length','height','num_inversions']][df.manufacturer == manufact])
+
+    plt.xlabel('Seating type')
+    # plt.ylabel(column.capitalize())
+    plt.show()
+    print(df[manufact])
+
+plot_seatingtype(manufacturers,'ACE Coaster Classic')
+
+
+# %%
 
 # Do amusement parks have any specialties?
