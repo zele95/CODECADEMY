@@ -1,3 +1,8 @@
+# Create a fib_finder() function that finds the nth number
+#  in the Fibonacci sequence. As a reminder, the Fibonacci 
+# sequence is a mathematical sequence that begins with 0 and 1,
+#  with each following term being the sum of the two previous terms.def fib_finder(n):
+
 def fib_finder(n):
   lst = [0,1]
   if n == 1 or n == 2:
@@ -14,15 +19,30 @@ print(fib_finder(6))
 memo = {}
 
 def fibonacci(num):
-  answer = None
   if num in memo:
-    answer = memo[num]
-  elif num == 0 or num == 1:
-    answer = num
+    return  memo[num]
+  elif  num == 1:
+    return  0
+  elif num == 2:
+    return 1
   else:
-    answer = fibonacci(num-1)+ fibonacci(num-2) 
-    memo[num] = answer
-  return answer
+    memo[num] = fibonacci(num-1) + fibonacci(num-2)  
+  return memo[num]
 
 print(fibonacci(20))
 print(fibonacci(200))
+
+# DP
+
+def fibonacciDP(num):
+  memo = {1:0,2:1}
+  if num in memo:
+    return memo[num]
+  else:
+    for i in range(3,num+1):
+      memo[i] = memo[i-1] + memo[i-2] 
+  return memo[num]
+
+print(fibonacciDP(6))
+print(fibonacciDP(20))
+print(fibonacciDP(200))
