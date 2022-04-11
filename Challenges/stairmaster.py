@@ -3,6 +3,10 @@
 # Take the example of climbing n = 4 steps. There are seven different ways
 #  one can climb four stairs using 1, 2, or 3 steps at a time: [1,1,1,1] [2,1,1] [1,2,1] [1,1,2] [2,2] [1,3] [3,1].
 
+from timeit import default_timer as timer
+
+
+
 ## Recursive:
 
 def stairmasterRec(n):
@@ -17,8 +21,10 @@ def stairmasterRec(n):
   else:
     return  stairmasterRec(n - 1) + stairmasterRec(n - 2) + stairmasterRec(n - 3)
 
+start = timer()
 print(stairmasterRec(10))
-
+end = timer()
+print(end - start)
 
 def stairmastermemo(n,memo):
     if n in memo:
@@ -36,7 +42,10 @@ def stairmastermemo(n,memo):
             memo[n] = stairmastermemo(n - 1,memo) + stairmastermemo(n - 2,memo) + stairmastermemo(n - 3,memo)
         return memo[n]
 
+start = timer()
 print(stairmastermemo(10,{}))
+end = timer()
+print(end - start)
 
 # Dynamic programming:
 
@@ -49,7 +58,10 @@ def stairmasterDP(n):
             memo[i] = memo[i-1] + memo[i-2] + memo[i-3]
     return memo[n]
 
+start = timer()
 print(stairmasterDP(10))
+end = timer()
+print(end - start)
 
 def stairmasterDPopt(n):
     memo = {0:1,1:1,2:2,3:4}
@@ -63,8 +75,10 @@ def stairmasterDPopt(n):
             memo[3] = count
     return memo[3]
 
+start = timer()
 print(stairmasterDPopt(10))
-
+end = timer()
+print(end - start)
 
 # # if stairmaster(0) should be 1 then:
 
