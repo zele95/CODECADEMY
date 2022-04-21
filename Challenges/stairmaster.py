@@ -24,7 +24,7 @@ def stairmasterRec(n):
 start = timer()
 print(stairmasterRec(10))
 end = timer()
-print(end - start)
+print(f'stairmasterRec: {end - start}')
 
 def stairmastermemo(n,memo):
     if n in memo:
@@ -45,7 +45,7 @@ def stairmastermemo(n,memo):
 start = timer()
 print(stairmastermemo(10,{}))
 end = timer()
-print(end - start)
+print(f'stairmastermemo: {end - start}')
 
 # Dynamic programming:
 
@@ -61,7 +61,7 @@ def stairmasterDP(n):
 start = timer()
 print(stairmasterDP(10))
 end = timer()
-print(end - start)
+print(f'stairmasterDP: {end - start}')
 
 def stairmasterDPopt(n):
     memo = {0:1,1:1,2:2,3:4}
@@ -78,8 +78,7 @@ def stairmasterDPopt(n):
 start = timer()
 print(stairmasterDPopt(10))
 end = timer()
-print(end - start)
-
+print(f'stairmasterDPopt: {end - start}')
 # # if stairmaster(0) should be 1 then:
 
 def stairmaster0(n):
@@ -90,4 +89,24 @@ def stairmaster0(n):
   else:
     return  stairmaster0(n - 1) + stairmaster0(n - 2) + stairmaster0(n - 3)
 
-print(stairmaster0(4))
+start = timer()
+print(stairmaster0(10))
+end = timer()
+print(f'Another way: {end - start}')
+
+
+# brute force
+from itertools import product
+
+def staimasterBrutal(n):
+  count = 0
+  for i in range(1,n+1):
+    for c in product([1,2,3],repeat = i):
+      if sum(c) == n:
+        count += 1
+  return count
+
+start = timer()
+print(staimasterBrutal(10))
+end = timer()
+print(f'brute force: {end - start}')
