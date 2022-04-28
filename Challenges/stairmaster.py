@@ -79,6 +79,8 @@ start = timer()
 print(stairmasterDPopt(10))
 end = timer()
 print(f'stairmasterDPopt: {end - start}')
+
+
 # # if stairmaster(0) should be 1 then:
 
 def stairmaster0(n):
