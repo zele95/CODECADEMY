@@ -1,5 +1,5 @@
 # With recursion and DP, always choosing a path or not 
-# choosing a path in the tree (dont iterate through different paths to search for combinations/permutations)
+# choosing a path in the tree (dont iterate through different paths to search for combinations, permutations yes)
 
 available_coins = [1,2,5,10,100]
 input_money = 5

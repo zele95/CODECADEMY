@@ -26,6 +26,7 @@ print(stairmasterRec(10))
 end = timer()
 print(f'stairmasterRec: {end - start}')
 
+# %% Recursive with memoization
 def stairmastermemo(n,memo):
     if n in memo:
         return memo[n]
