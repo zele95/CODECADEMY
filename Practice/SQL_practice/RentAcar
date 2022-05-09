@@ -1,0 +1,49 @@
+-- examine the tables 
+SELECT * FROM trips;
+ 
+SELECT * FROM riders;
+ 
+SELECT * FROM cars;
+
+-- cross join riders and cars
+SELECT *
+FROM riders
+CROSS JOIN cars;
+
+-- Find the columns to join between trips and riders and combine the two tables using a LEFT JOIN
+SELECT *
+FROM trips
+LEFT JOIN riders
+  ON trips.rider_id = riders.id;
+
+-- Find the columns to join on and combine the trips and cars table using an INNER JOIN
+SELECT * 
+FROM trips
+INNER JOIN cars
+ON trips.car_id = cars.id;
+
+-- Stack the riders table on top of the new table named riders2
+SELECT *
+FROM riders
+UNION SELECT *
+FROM riders2;
+
+-- What is the average cost for a trip?
+SELECT AVG(cost)
+FROM trips;
+
+-- Find all the riders who have used Lyft less than 500 times
+SELECT id
+FROM riders
+WHERE total_trips < 500;
+
+-- Calculate the number of cars that are active
+SELECT COUNT(*)
+FROM cars
+WHERE status = 'active';
+
+-- Write a query that finds the two cars that have the highest trips_completed
+SELECT id, trips_completed
+FROM cars
+ORDER BY 2 DESC
+LIMIT 2;
