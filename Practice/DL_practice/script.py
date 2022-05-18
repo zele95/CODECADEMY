@@ -43,7 +43,7 @@ labels = admissions['Chance of Admit']
 # split test train data, standardize
 
 # split
-X_train, X_test, y_train, y_test = train_test_split(features,labels)
+X_train, X_test, y_train, y_test = train_test_split(features,labels, test_size=0.2)
 
 # select numerical features
 numerical_features = features.select_dtypes(['float64','int64'])
@@ -63,12 +63,16 @@ X_test_std = pd.DataFrame(X_test_std, columns = features.columns)
 # create model
 
 # set the model
-def design_model(X = X_train_std,learning_rate = 0.01):
+def design_model(X = X_train_std,learning_rate = 0.005):
     model = Sequential()
     input = InputLayer(input_shape = (X.shape[1],))
     model.add(input)
-    model.add(Dense(64, activation = "relu"))
-    model.add(layers.Dropout(0.2)) # regularization method
+    hidden_layer = layers.Dense(16, activation='relu')
+    model.add(hidden_layer)
+    model.add(layers.Dropout(0.1))
+    hidden_layer_2 = layers.Dense(8, activation='relu')
+    model.add(hidden_layer_2)
+    model.add(layers.Dropout(0.2))# regularization method
     model.add(Dense(1))
     # print(model.summary())
 
@@ -77,7 +81,7 @@ def design_model(X = X_train_std,learning_rate = 0.01):
     model.compile(loss = 'mse', metrics = ['mae'], optimizer = opt)
     return model
 
-learning_rate = 0.01
+learning_rate = 0.005
 model = design_model(X_train_std,learning_rate)
 # %%
 # train the model
@@ -85,7 +89,7 @@ model = design_model(X_train_std,learning_rate)
 # fit and evaluate
 def fit_model(model, features_train, labels_train, num_epochs, batch_size):
 
-    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience = 10)
+    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience = 20)
     history = model.fit(features_train, labels_train, epochs=num_epochs, batch_size= batch_size, verbose=1, validation_split = 0.2, callbacks = [es])
     return history
 
@@ -105,20 +109,27 @@ print('R2:', r2_score(y_test, predicted_values))
 # %%
 
 def plot(history):
-  #plotting
-  fig, axs = plt.subplots(1, 2, gridspec_kw={'hspace': 1, 'wspace': 0.5}) 
-  (ax1, ax2) = axs
-  ax1.plot(history.history['loss'], label='train')
-  ax1.plot(history.history['val_loss'], label='validation')
-  ax1.legend(loc="upper right")
-  ax1.set_xlabel("# of epochs")
-  ax1.set_ylabel("loss (mse)")
+    # plot MAE and val_MAE over each epoch
+    fig = plt.figure()
+    ax1 = fig.add_subplot(2, 1, 1)
+    ax1.plot(history.history['mae'])
+    ax1.plot(history.history['val_mae'])
+    ax1.set_title('model mae')
+    ax1.set_ylabel('MAE')
+    ax1.set_xlabel('epoch')
+    ax1.legend(['train', 'validation'], loc='upper left')
 
-  ax2.plot(history.history['mae'], label='train')
-  ax2.plot(history.history['val_mae'], label='validation')
-  ax2.legend(loc="upper right")
-  ax2.set_xlabel("# of epochs")
-  ax2.set_ylabel("MAE")
+    # Plot loss and val_loss over each epoch
+    ax2 = fig.add_subplot(2, 1, 2)
+    ax2.plot(history.history['loss'])
+    ax2.plot(history.history['val_loss'])
+    ax2.set_title('model loss')
+    ax2.set_ylabel('loss')
+    ax2.set_xlabel('epoch')
+    ax2.legend(['train', 'validation'], loc='upper left')
+
+    plt.tight_layout()
+    plt.show()
 
 plot(history)
 
