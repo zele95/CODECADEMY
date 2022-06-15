@@ -45,7 +45,7 @@ training_iterator.next()
 print("\nLoading validation data...")
 
 
-validation_iterator = validation_data_generator.flow_from_directory(DIRECTORY,class_mode='categorical', color_mode='grayscale',batch_size=BATCH_SIZE)#, subset='validation')
+validation_iterator = validation_data_generator.flow_from_directory(DIRECTORY,class_mode='categorical', color_mode='grayscale',batch_size=BATCH_SIZE,shuffle = False)#, subset='validation')
 
 #Print its attributes:
 # print(training_data_generator.__dict__)
