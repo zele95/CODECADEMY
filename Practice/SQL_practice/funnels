@@ -1,0 +1,34 @@
+-- see multiple tables
+SELECT *
+FROM browse
+LIMIT 5;
+ 
+SELECT *
+FROM checkout
+LIMIT 5;
+ 
+SELECT *
+FROM purchase
+LIMIT 5;
+
+-- build a funnel of tables
+WITH funnels AS (
+  SELECT DISTINCT b.browse_date,
+     b.user_id,
+     c.user_id IS NOT NULL AS 'is_checkout',
+     p.user_id IS NOT NULL AS 'is_purchase'
+  FROM browse AS 'b'
+  LEFT JOIN checkout AS 'c'
+    ON c.user_id = b.user_id
+  LEFT JOIN purchase AS 'p'
+    ON p.user_id = c.user_id)
+
+SELECT browse_date, --*
+    COUNT(user_id) AS 'num_browse', --column that counts the total number of rows in funnels.
+    SUM(is_checkout) AS 'num_checkout', -- column that sums the is_checkout in funnels.
+    SUM(is_purchase) AS 'num_purchase', --column that sums the is_purchase column in funnels.
+    1.0 * SUM(is_checkout) / COUNT(user_id) AS 'checkout_%', -- compute percentages
+    1.0 * SUM(is_purchase) / SUM(is_checkout) AS 'purchase_%'
+
+FROM funnels
+GROUP BY 1; -- *to see hoe the percentages changes in time*
