@@ -6,8 +6,8 @@ from keras.layers import Input, LSTM, Dense
 from keras.models import Model
 
 # UNCOMMENT THE TWO LINES BELOW IF YOU ARE GETTING ERRORS ON A MAC
-import os
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
+# import os
+# os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 # Choose a dimensionality
 latent_dim = 256

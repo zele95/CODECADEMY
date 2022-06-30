@@ -69,3 +69,8 @@ for seq_index in range(100):
   print('-')
   print('Input sentence:', input_docs[seq_index])
   print('Decoded sentence:', decoded_sentence)
+
+
+# BONUS
+# Add in a step to convert new text into a NumPy matrix so that you can translate new sentences
+# that aren’t in the dataset. (This may also require handling unknown tokens.)

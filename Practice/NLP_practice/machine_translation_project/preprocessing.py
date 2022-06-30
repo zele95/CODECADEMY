@@ -3,7 +3,7 @@ import re
 
 # Importing our translations
 # for example: "spa.txt" or "spa-eng/spa.txt"
-data_path = "YOUR-FILE-NAME-HERE.txt"
+data_path = "span-eng.txt"
 
 # Defining lines as a list of each line
 with open(data_path, 'r', encoding='utf-8') as f:
@@ -88,3 +88,6 @@ for line, (input_doc, target_doc) in enumerate(zip(input_docs, target_docs)):
       decoder_target_data[line, timestep - 1, target_features_dict[token]] = 1.
 
 # print out those value here:
+if __name__ == "__main__":
+  # print(list(input_features_dict.keys())[:50], reverse_target_features_dict[50], len(input_tokens))
+  print(list(input_features_dict.keys()), reverse_target_features_dict, len(input_tokens))
