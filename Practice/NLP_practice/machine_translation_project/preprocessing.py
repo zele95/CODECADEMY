@@ -3,7 +3,7 @@ import re
 
 # Importing our translations
 # for example: "spa.txt" or "spa-eng/spa.txt"
-data_path = "span-eng.txt"
+data_path = "spa.txt"
 
 # Defining lines as a list of each line
 with open(data_path, 'r', encoding='utf-8') as f:
@@ -18,8 +18,9 @@ target_tokens = set()
 
 # Adjust the number of lines so that
 # preprocessing doesn't take too long for you
-for line in lines[:501]:
+for line in lines[:100000]:
   # Input and target sentences are separated by tabs
+  # print(line)
   input_doc, target_doc = line.split('\t')[:2]
   # Appending each input sentence to input_docs
   input_docs.append(input_doc)

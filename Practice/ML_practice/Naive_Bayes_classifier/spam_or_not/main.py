@@ -36,12 +36,12 @@ Best wishes
 bow_vectorizer = CountVectorizer()
 
 training_vectors = bow_vectorizer.fit_transform(training_docs)
-test_vectors = bow_vectorizer.transform([test_text])
+test_vector = bow_vectorizer.transform([test_text])
 
 # Naive Bayes Classifier
 spam_classifier = MultinomialNB()
 spam_classifier.fit(training_vectors, training_labels)
 
-predictions = spam_classifier.predict(test_vectors)
+predictions = spam_classifier.predict(test_vector)
 # print(predictions)
 print("Looks like a normal email!" if predictions[0] == 0 else "You've got spam!")

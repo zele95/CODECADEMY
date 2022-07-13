@@ -1,4 +1,4 @@
-from preprocessing import num_encoder_tokens, num_decoder_tokens, decoder_target_data, encoder_input_data, decoder_input_data, decoder_target_data
+from preprocessing import num_encoder_tokens, num_decoder_tokens, decoder_target_data, encoder_input_data, decoder_input_data
 
 from tensorflow import keras
 # Add Dense to the imported layers
@@ -15,7 +15,7 @@ latent_dim = 256
 # Choose a batch size
 # and a larger number of epochs:
 batch_size = 50
-epochs = 50
+epochs = 100
 
 # Encoder training setup
 encoder_inputs = Input(shape=(None, num_encoder_tokens))

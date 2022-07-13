@@ -36,7 +36,7 @@ else:
 
 # get vocabulary of terms
 try:
-  feature_names = vectorizer.get_feature_names()
+  feature_names = vectorizer.get_feature_names_out()
 except:
   pass
 

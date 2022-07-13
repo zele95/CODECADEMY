@@ -1,6 +1,6 @@
 import os
 import gensim
-import spacy
+# import spacy
 from president_helper import read_file, process_speeches, merge_speeches, get_president_sentences, get_presidents_sentences, most_frequent_words
 
 # get list of all speech files
