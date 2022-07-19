@@ -1,0 +1,9 @@
+// devcontainer.json
+{
+	"name": "TensorFlow GPU",
+	"build": {
+	  "dockerfile": "Dockerfile"
+	},
+	"runArgs": ["--gpus=all"],
+	"remoteUser": "zele95"
+}

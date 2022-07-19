@@ -1,5 +1,8 @@
+# %%
 import numpy as np
 import re
+import psutil
+
 
 # Importing our translations
 # for example: "spa.txt" or "spa-eng/spa.txt"
@@ -18,9 +21,11 @@ target_tokens = set()
 
 # Adjust the number of lines so that
 # preprocessing doesn't take too long for you
-for line in lines[:100000]:
+for line in lines[:1000]:
   # Input and target sentences are separated by tabs
   # print(line)
+  # print('RAM memory % used:', psutil.virtual_memory()[2])
+
   input_doc, target_doc = line.split('\t')[:2]
   # Appending each input sentence to input_docs
   input_docs.append(input_doc)
@@ -92,3 +97,5 @@ for line, (input_doc, target_doc) in enumerate(zip(input_docs, target_docs)):
 if __name__ == "__main__":
   # print(list(input_features_dict.keys())[:50], reverse_target_features_dict[50], len(input_tokens))
   print(list(input_features_dict.keys()), reverse_target_features_dict, len(input_tokens))
+
+
